@@ -1,0 +1,14 @@
+from Crypto.Hash import keccak
+
+
+lambda_get_types = lambda x: [i['type'] for i in x['inputs']]
+lambda_get_names = lambda x: [i['name'] for i in x['inputs']]
+lambda_get_indexed = lambda x: [i['indexed'] for i in x['inputs']]
+lambda_get_signature = (lambda x: x['name']
++ '(' 
++ ','.join([t for t in x['types']]) 
++ ')'
+)
+lambda_get_hash = (lambda x: "0x" + keccak.new(digest_bits=256)
+.update(f"{x['signature']}".encode())
+.hexdigest())
