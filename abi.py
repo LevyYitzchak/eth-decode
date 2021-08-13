@@ -15,6 +15,9 @@ class Abi:
         df["types"] = df.apply(lambda_get_types, axis=1)
         df["names"] = df.apply(lambda_get_names, axis=1)
         df["indexed"] = df.apply(lambda_get_indexed, axis=1)
+        df["types_data"] = df.apply(lambda_get_types_data, axis=1)
+        df["types_topics"] = df.apply(lambda_get_types_topics, axis=1)
+        
         df["signature"] = df.apply(lambda_get_signature, axis=1)
         df["hash"] = df.apply(lambda_get_hash, axis=1)
         df = df.drop(COLS_TO_DROP_EVENTS, axis=1)
@@ -22,4 +25,13 @@ class Abi:
         return df
 
 
+class Log:
     
+    def __init__(self, df):
+        '''
+        Events dataframe with types already added
+        '''
+        self.df = df
+
+    def decode_date(self):
+        pass
