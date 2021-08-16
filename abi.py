@@ -22,7 +22,30 @@ class Abi:
         df["hash"] = df.apply(lambda_get_hash, axis=1)
         df = df.drop(COLS_TO_DROP_EVENTS, axis=1)
 
+        self.df = df
+
         return df
+
+    def _split_topics_data(self):
+        types_data_list = []
+        types_topics_list = []
+        for _, x in self.df.iterrows():        
+            tmp_list = list(zip(x['types'], x['indexed']))
+            types_topics = []
+            types_data = []
+            for arg_type, indexed in tmp_list:    
+                if indexed:
+                    types_topics.append(arg_type)
+                else:
+                    types_data.append(arg_type)
+
+            if not types_topics: types_topics = None
+            if not types_data: types_data = None
+            types_topics_list.append(types_topics)
+            types_data_list.append(types_data)
+
+        self.df['types_topics'] = types_topics_list
+        self.df['types_data'] = types_data_list
 
 
 class Log:

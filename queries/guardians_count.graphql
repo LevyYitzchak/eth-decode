@@ -1,0 +1,17 @@
+{
+  guardians {
+    id
+    treeId # registry.getJurorId(jurorAddress) 
+    activeBalance
+    lockedBalance
+    availableBalance
+    deactivationBalance
+    withdrawalsLockTermId
+    disputes
+    drafts
+    stakingMovements
+    shareClaims
+    createdAt # event.block.timestamp
+    }
+  
+}
