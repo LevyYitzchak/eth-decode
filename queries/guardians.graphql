@@ -1,0 +1,24 @@
+{
+  guardians {
+    id
+    treeId # registry.getJurorId(jurorAddress) 
+    activeBalance
+    lockedBalance
+    availableBalance
+    deactivationBalance
+    withdrawalsLockTermId
+    #disputes{
+    #  id # has skip and firts arguments
+    #}
+
+    #drafts
+    #stakingMovements
+    #shareClaims
+    createdAt # event.block.timestamp (Unix time in seconds)
+    }
+  
+}
+
+# https://thegraph.com/legacy-explorer/subgraph/aragon/aragon-court-v2-mainnet
+# https://api.thegraph.com/subgraphs/name/aragon/aragon-court-v2-mainnet
+# https://github.com/aragon/court-subgraph
