@@ -1,5 +1,7 @@
 {
-  guardians {
+  guardians(
+      first:$first, 
+      skip:$skip) {
     id
     treeId # registry.getJurorId(jurorAddress) 
     activeBalance
@@ -7,13 +9,6 @@
     availableBalance
     deactivationBalance
     withdrawalsLockTermId
-    #disputes{
-    #  id # has skip and firts arguments
-    #}
-
-    #drafts
-    #stakingMovements
-    #shareClaims
     createdAt # event.block.timestamp (Unix time in seconds)
     }
   

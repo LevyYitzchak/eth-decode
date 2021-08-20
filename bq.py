@@ -24,15 +24,18 @@ class BQ_table:
             self.project, 
             self.dataset_name, 
             self.table_name])
-        self.exists = False
 
+        self._check_exists()
+    
+    def _check_exists(self):
         try:
             self._assign()    
         except NotFound:
-            logging.warning(
-                f"""Table `{self.table_name}` does not exist in dataset `{self.dataset_name}`.""")
+            self.exists = False
+
+    
     def _assign(self):
-        table_ref = (client.dataset(self.dataset_name).table(self.table_name))
+        table_ref = client.dataset(self.dataset_name).table(self.table_name)
         self.table = client.get_table(table_ref)  # API request
         self.exists = True
 
@@ -40,10 +43,25 @@ class BQ_table:
         self,
         df : pd.DataFrame):
         rows_list = [row_dict 
-        for index, row_dict 
+        for index, row_dict
         in df.to_dict(orient="index").items()]
 
         return self.insert_rows(rows_list)
+    
+    def download_table(self, limit=100, print_query=True):
+        query = f"""
+                SELECT * 
+                FROM `{self.table_id}` 
+                """
+
+        if limit:
+            query += f"LIMIT {limit}"
+        
+        query_job = client.query(query) # Make an API request.
+        if print_query: print(query)
+
+        return query_job.result().to_dataframe()
+
     
     def insert_rows(
         self, 
@@ -97,6 +115,16 @@ class BQ_table:
 
             
         table = client.create_table(table) # API request
+
+
+    def delete_table(self):
+        client.delete_table(
+            self.table_id, 
+            not_found_ok=True)
+        self._check_exists()
+        
+        return self.exists
+        
 
 
 
