@@ -1,4 +1,3 @@
-from re import X
 from Crypto.Hash import keccak
 from eth_abi import decode_abi
 

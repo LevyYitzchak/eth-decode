@@ -167,7 +167,12 @@ def create_bq_view(
         
 
 
-def get_logs(address, func_sign, limit=100, print_query=True):    
+def get_logs(
+    address:list, 
+    func_sign:list, 
+    limit=100, 
+    print_query=True):
+        
     query = f"""
             SELECT * 
             FROM {BQ_ETH_LOGS}, 
